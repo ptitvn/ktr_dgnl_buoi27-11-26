@@ -11,19 +11,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class Pha1VerifyTest {
 
     @Autowired
@@ -31,6 +32,17 @@ class Pha1VerifyTest {
 
     @Autowired
     private JdbcTemplate jdbc;
+
+    @BeforeEach
+    void resetDatabase() {
+        jdbc.execute("DROP TABLE IF EXISTS reviews CASCADE");
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator(
+                new ClassPathResource("schema.sql"),
+                new ClassPathResource("data.sql")
+        );
+        populator.setSqlScriptEncoding("UTF-8");
+        populator.execute(jdbc.getDataSource());
+    }
 
     private String readSql(String relativePath) throws Exception {
         String raw = Files.readString(Path.of(relativePath));

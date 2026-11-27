@@ -8,8 +8,8 @@ Lớp:CNNT3
 
 Tự đánh dấu phần đã xong trước mốc 1 (chỉ để GV tham khảo, không thay cho kết quả chấm):
 
-- [ ] I1  - [ ] I2  - [ ] I3  - [ ] Endpoint GET /api/showtimes/{id}
-- [ ] F1  - [ ] F2  - [ ] F3  - [ ] API khách hàng (tạo, xem, danh sách, validate, lỗi)
+- [x] I1  - [x] I2  - [x] I3  - [x] Endpoint GET /api/showtimes/{id}
+- [x] F1  - [x] F2  - [x] F3  - [x] API khách hàng (tạo, xem, danh sách, validate, lỗi)
 
 Ghi chú (nếu có):
 
